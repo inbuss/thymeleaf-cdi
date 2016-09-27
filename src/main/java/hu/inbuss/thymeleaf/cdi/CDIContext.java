@@ -1,39 +1,58 @@
-package com.github.inbuss.thymeleaf.cdi;
+package hu.inbuss.thymeleaf.cdi;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.CDI;
 import javax.enterprise.util.AnnotationLiteral;
-import javax.inject.Inject;
+import org.thymeleaf.context.IContext;
 import org.thymeleaf.context.LazyContextVariable;
 
 /**
  * @author PÁLFALVI Tamás &lt;tamas.palfalvi@inbuss.hu&gt;
  */
-@ApplicationScoped
-public class CDIVariables implements Variables {
-    @Inject private BeanManager beanManager;
+public class CDIContext implements IContext {
+    private final Locale locale;
+    private final BeanManager beanManager;
+    private final Set<String> names;
 
-    @Override public Set<String> keySet() {
-        final Set<String> res = new HashSet<String>();
+    protected CDIContext(final Locale locale, final BeanManager beanManager) {
+        this.locale = locale;
+        this.beanManager = beanManager;
+        names = new HashSet<String>();
         final Set<Bean<?>> beans = beanManager.getBeans(Object.class, new AnnotationLiteral<Any>() {});
         for (final Bean<?> b : beans) {
             final String name = b.getName();
             if (name != null)
-                res.add(name);
+                names.add(name);
         }
-        return res;
     }
 
-    @Override public Object get(String key) {
-        final Set<Bean<?>> beans = beanManager.getBeans(key);
+    @Override
+    public Locale getLocale() {
+        return locale;
+    }
+
+    @Override
+    public boolean containsVariable(final String name) {
+        return names.contains(name);
+    }
+
+    @Override
+    public Set<String> getVariableNames() {
+        return names;
+    }
+
+    @Override
+    public Object getVariable(String name) {
+        final Set<Bean<?>> beans = beanManager.getBeans(name);
         if (beans.isEmpty())
-            return NOT_PRESENT;
+            return null;
 
         return new LazyContextVariable<Object>() {
             @Override
