@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.thymeleaf.context.IWebContext;
 
 /**
+ * Factory bean for creating {@link CDIWebContext} instances.
+ *
  * @author PÁLFALVI Tamás &lt;tamas.palfalvi@inbuss.hu&gt;
  */
 @Dependent
@@ -21,6 +23,13 @@ public class CDIWebContextFactory {
         this.servletContext = servletContext;
     }
 
+    /**
+     * Factory method for creating a {@link CDIWebContext} instance.
+     *
+     * @param request the servlet request object describing the current operation
+     * @param response the servlet response object describing the current operation
+     * @return the newly created {@link CDIWebContext} instance
+     */
     public IWebContext create(final HttpServletRequest request, final HttpServletResponse response) {
         return new CDIWebContext(request, response, beanManager, servletContext);
     }
