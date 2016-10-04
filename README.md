@@ -14,9 +14,8 @@ Usage
     ```xml
         <dependency>
             <groupId>hu.inbuss</groupId>
-            <artifactId>thymeleaf-jersey</artifactId>
+            <artifactId>thymeleaf-cdi</artifactId>
             <version>0.0.9</version>
-            <optional>true</optional>
         </dependency>
     ```
     
