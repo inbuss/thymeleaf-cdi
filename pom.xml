@@ -4,7 +4,7 @@
 	<groupId>hu.inbuss</groupId>
 	<artifactId>thymeleaf-cdi</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.9</version>
 
 	<name>Thymeleaf CDI Integration</name>
 	<description>An extension for Thymeleaf that allows referencing CDI @Named beans as top-level objects in expressions.</description>
