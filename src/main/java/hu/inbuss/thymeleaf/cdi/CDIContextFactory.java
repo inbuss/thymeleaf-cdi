@@ -18,6 +18,6 @@ public class CDIContextFactory {
     }
 
     public IContext create(final Locale locale) {
-        return new CDIContext(locale, beanManager);
+        return new CDIContext(locale == null ? Locale.getDefault() : locale, beanManager);
     }
 }
