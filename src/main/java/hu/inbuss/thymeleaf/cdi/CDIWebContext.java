@@ -10,7 +10,8 @@ import org.thymeleaf.context.IWebContext;
 /**
  * @author PÁLFALVI Tamás &lt;tamas.palfalvi@inbuss.hu&gt;
  */
-public class CDIWebContext extends CDIContext implements IWebContext {    private final HttpServletRequest request;
+public class CDIWebContext extends CDIContext implements IWebContext {
+    private final HttpServletRequest request;
     private final HttpServletResponse response;
     private final ServletContext servletContext;
 
@@ -21,13 +22,6 @@ public class CDIWebContext extends CDIContext implements IWebContext {    privat
         this.response = response;
         this.servletContext = servletContext;
     }
-
-//    CDIWebContext(final HttpServletRequest request, final HttpServletResponse response) {
-//        super(request.getLocale());
-//        this.request = request;
-//        this.response = response;
-//        this.servletContext = beanManager.getReference(beanManager.resolve(beanManager.getBeans(ServletContext.class)), beanManager.createCreationalContext(bean));
-//    }
 
     @Override public HttpServletRequest getRequest() {
         return request;
