@@ -16,7 +16,7 @@ public class CDIWebContextFactory {
     private final BeanManager beanManager;
     private final ServletContext servletContext;
 
-    @Inject public CDIWebContextFactory(final BeanManager beanManager, final ServletContext servletContext) {
+    @Inject protected CDIWebContextFactory(final BeanManager beanManager, final ServletContext servletContext) {
         this.beanManager = beanManager;
         this.servletContext = servletContext;
     }

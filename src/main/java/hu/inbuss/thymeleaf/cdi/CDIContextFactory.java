@@ -13,7 +13,7 @@ import org.thymeleaf.context.IContext;
 public class CDIContextFactory {
     private final BeanManager beanManager;
 
-    @Inject public CDIContextFactory(final BeanManager beanManager) {
+    @Inject protected CDIContextFactory(final BeanManager beanManager) {
         this.beanManager = beanManager;
     }
 
