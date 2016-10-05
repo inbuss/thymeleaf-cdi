@@ -6,6 +6,21 @@ top-level objects in expressions. This works with the Standard Dialect
 and its OGNL-based expression language - Spring users would probably not
 be interested in CDI integration anyway.
 
+Dependencies
+------------
+
+This extension is a bridge between the CDI standard and Thymeleaf; your
+project should already contain both Thymeleaf and the CDI API.
+
+The extension targets the CDI 1.2 standard. It may run on earlier versions
+as well, but this was not tested. An implementation of the standard must
+be provided by the environment or the application at runtime. (The extension
+was tested using Weld 2.3.5, but any compliant implementation should work.)
+
+The Thymeleaf side is written against the Thymeleaf 3 API. Earlier versions
+cannot be reasonably supported due to the lack of lazy context variable
+evaluation.
+
 Usage
 -----
 
@@ -55,3 +70,22 @@ Usage
     
     (If your project was using plain `Context` instead of `WebContext`, replace it
     with a `CDIContext` instance obtained from the `CDIContextFactory` bean.)
+
+3. You're ready. Define CDI named beans, e.g.
+
+    ```java
+    @javax.enterprise.context.SessionScoped
+    @javax.inject.Named("cart")
+    public class ShoppingCart implements java.io.Serializable {
+        public int getItemCount() {
+            /* ... */     
+        }
+        /* ... */
+    }
+    ```
+    
+    then reference them from a template:
+    
+    ```html
+    <span>You have <em th:text="${cart.itemCount}">many</em> products in your cart.</span>
+    ```
